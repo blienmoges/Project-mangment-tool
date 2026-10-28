@@ -1,0 +1,16 @@
+# Starts a local PostgreSQL database for development: docker compose up -d
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pm
+      POSTGRES_PASSWORD: pm_password
+      POSTGRES_DB: pm_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - pm_db_data:/var/lib/postgresql/data
+volumes:
+  pm_db_data:
+
