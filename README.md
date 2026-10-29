@@ -42,44 +42,7 @@ It follows the *Database Design* and *API Design* documents.
 All paths start with `/api/v1`. The **database schema is complete** (all tables from the Database Design),
 so the next modules only need code, not new tables.
 
-## Project structure
 
-```
-prisma/
-  schema.prisma        All tables, enums and relations
-  sql/extras.sql       Rules Prisma cannot express (partial unique indexes, CHECKs, message search)
-  seed.ts              Demo data (users, workspace, skills, spaces, teams)
-scripts/add-extras.js  Adds extras.sql to the first migration
-src/
-  main.ts              Starts the server (prefix /api/v1, validation, CORS, error format)
-  app.module.ts        Wires the modules together
-  common/              Error format, decorators (@Public, @CurrentUser), helpers
-  prisma/              Database connection
-  activity/            Activity log writer
-  auth/                Register, login, tokens; guard that protects every route
-  users/               /me endpoints
-  workspaces/          Workspaces, members, invitations, role checks
-  skills/              Skills catalog
-  workload/            Open hours per person (team workload now, assignment suggestions later)
-  teams/               Teams; team-access.service.ts keeps team-based space/project access in sync
-  spaces/              Spaces, members, workflow statuses, custom fields; space-access.service.ts
-  projects/            Projects, project members, phases, project move; project-access.service.ts
-  tasks/               Tasks, assignment, status changes; the rules are in task-workflow.ts and suggestions.ts
-  notifications/       Notifications, settings, email (SMTP) and SMS (Twilio) delivery
-  jobs/                BullMQ queues, deadline alerts and the safety sweep; timing.ts holds the alert times
-  realtime/            The WebSocket at /ws
-  sprints/             Sprints, backlog, burndown, velocity, capacity; sprint-math.ts holds the arithmetic
-  issues/              Issue reporting; issue-rules.ts holds the status rules
-  messaging/           Direct, project and team channels, messages, search
-  comments/            Task comments
-  files/               Attachments, file storage (disk), signed download links
-  time/                Timers, manual time entries, time report and CSV export
-  views/               Timeline, calendar and workload views; view-math.ts holds the calculations
-  automations/         The ready-made rules and their actions
-  github/              GitHub App connection, repositories, webhook, code links
-  activity/            Activity log writer (ActivityService) and the activity endpoints
-test/                  Checks that need no database (npm run test:logic)
-```
 
 ## Setup (first time)
 
