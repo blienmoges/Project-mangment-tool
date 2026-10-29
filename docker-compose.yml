@@ -1,0 +1,25 @@
+# Starts PostgreSQL and Redis for development: docker compose up -d
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pm
+      POSTGRES_PASSWORD: pm_password
+      POSTGRES_DB: pm_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - pm_db_data:/var/lib/postgresql/data
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"] # keeps scheduled reminder jobs across restarts
+    ports:
+      - "6379:6379"
+    volumes:
+      - pm_redis_data:/data
+volumes:
+  pm_db_data:
+  pm_redis_data:
+
